@@ -1,0 +1,6 @@
+// Pure map state helpers; keep old v1.0 data intact and only add optional fields.
+export function normalizeMap(map){return {...map,terrain:Array.isArray(map.terrain)?map.terrain:[],stamps:Array.isArray(map.stamps)?map.stamps:[],paths:Array.isArray(map.paths)?map.paths:[],markers:Array.isArray(map.markers)?map.markers:[],customAssets:Array.isArray(map.customAssets)?map.customAssets:[],layerState:map.layerState||{}};}
+export function pointFromClient(x,y,rect,w=1000,h=650){return {x:Math.max(0,Math.min(w,Math.round((x-rect.left)*w/rect.width))),y:Math.max(0,Math.min(h,Math.round((y-rect.top)*h/rect.height)))}}
+export function makeStamp(type,p,size=42){return {id:crypto.randomUUID(),type,x:p.x,y:p.y,size,rotation:0,label:''}}
+export function makeStroke(kind,points,size){return {id:crypto.randomUUID(),kind,points:points.map(p=>({...p})),width:Math.max(3,size/5)}}
+export function applyAction(raw,action){const map=normalizeMap(raw);switch(action.type){case 'addStamp':return {...map,stamps:[...map.stamps,action.item]};case 'moveStamp':return {...map,stamps:map.stamps.map(s=>s.id===action.id?{...s,x:action.x,y:action.y}:s)};case 'addPath':return {...map,paths:[...map.paths,action.item]};case 'deleteStamp':return {...map,stamps:map.stamps.filter(s=>s.id!==action.id)};default:return map;}}

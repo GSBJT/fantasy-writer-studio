@@ -1,57 +1,69 @@
-# Fantasy Writer Studio v0.1 — 초보자 설치 가이드
+# Fantasy Writer Studio v1.1 — Fantasy Map Studio 2.0
 
-## 1. 준비물
-- Windows PC (최초 업로드는 PC가 편합니다)
-- Node.js LTS: https://nodejs.org/  (설치 시 PATH 옵션 기본값 유지)
-- GitHub 계정: https://github.com/signup
-- Vercel 계정: https://vercel.com/signup (GitHub로 로그인 추천)
-- 갤럭시 + Chrome
+## 중요한 안내
+이 ZIP은 v1.0 통합 개발판을 기반으로 지도 편집기를 교체한 **테스트용 전체 소스코드**입니다. 현재 아내분이 사용하는 Vercel 운영 사이트는 변경되지 않았습니다. 운영 사이트의 실제 원고는 원래 브라우저의 백업 메뉴에서 JSON 백업을 내려받고 PC와 OneDrive 등 서로 다른 두 장소에 보관하세요. URL을 바꾸거나 브라우저 저장소를 비우지 마세요.
 
-## 2. PC에서 실행 확인
-1. 이 ZIP 파일을 `C:\FantasyWriterStudio` 같은 폴더에 압축 해제합니다. ZIP 자체가 아닌, **package.json**이 있는 폴더에서 작업해야 합니다.
-2. 폴더 주소 표시줄에 `cmd`를 입력하고 Enter를 누릅니다.
-3. 아래 명령을 하나씩 붙여넣습니다.
+## 설치 (Windows)
+1. ZIP을 `C:\Fantasy_Writer_Studio_v1_1`로 압축 해제합니다.
+2. 파일 탐색기에서 `package.json`이 있는 폴더를 열고 주소창에 `cmd`를 입력합니다.
+3. 명령어를 차례로 실행합니다.
+
 ```bat
 node -v
 npm -v
 npm install
+npm test
+npm run build
 npm run dev
 ```
-4. 출력되는 `http://localhost:5173/` 주소를 PC 브라우저에서 엽니다(포트 숫자는 달라질 수 있음).
-5. 불가리아어 `Писане`에서 챕터를 쓰고 `Герои`에서 캐릭터와 이미지를 추가합니다. 페이지 새로고침 후 저장 여부를 확인합니다.
 
-## 3. GitHub에 올리기 (명령어 없이)
-1. https://github.com/new 에서 Repository name: `fantasy-writer-studio` 입력.
-2. 아내분의 미공개 작품을 보호하기 위해 **Private** 선택. `Create repository` 클릭.
-3. 생성된 저장소의 `uploading an existing file` 또는 `Add file` > `Upload files` 클릭.
-4. 압축 해제한 폴더의 **내용물**(index.html, package.json, src 폴더, public 폴더, .gitignore 등)을 업로드. `node_modules`와 `dist`는 업로드하지 마세요. 폴더 드래그가 지원되는 PC 브라우저 사용을 권장합니다.
-5. `Commit changes` 클릭. 업로드 후 저장소 맨 위에 `package.json`과 `index.html`이 보여야 합니다.
+4. 터미널에 표시된 주소(통상 `http://localhost:5173`)를 여세요.
+5. 기존 실사용 원고 대신 테스트용 작품과 지도에서 확인하세요. 로컬 `localhost`와 실제 Vercel 사이트의 브라우저 데이터는 별개입니다.
 
-> ZIP 파일 하나를 저장소에 올리는 것은 안 됩니다. 압축을 풀고 **개별 파일과 폴더 구조**를 올려야 Vercel이 빌드합니다. GitHub 웹에서 파일 드래그 업로드가 불편하면 GitHub Desktop(https://desktop.github.com/)으로 폴더를 추가할 수도 있습니다.
+## 지도 사용법
+- 왼쪽 팔레트의 **Objects / Обекти**에서 성, 산맥, 숲, 요새, 다리 등을 지도 위로 드래그하거나 아이콘을 클릭한 다음 지도를 클릭하세요.
+- **Terrain / Терен** 탭에서 초원, 바다, 사막, 눈, 바위, 늪을 고른 후 지도에 마우스/손가락으로 칠하세요.
+- **Select / Избор** 로 지물을 선택하고 위치를 이동하세요. 오른쪽에서 크기/회전/이름을 변경할 수 있습니다.
+- **River / Река**, **Road / Път** 도구로 선을 그리세요.
+- **Text / Име** 로 지명 텍스트를 추가하세요.
+- **AI/PNG**에서 투명 배경 이미지를 지물로 등록해 보세요. 기존 생성 이미지를 배경 지도로도 가져올 수 있습니다.
+- 오른쪽 **Layers / Слоеве**에서 지형/선/지물/지명 레이어를 숨기거나 투명도를 조절하세요.
+- **Undo/Redo**(최근 지도 변경 최대 40개), PNG(2000×1300) 또는 SVG 내보내기를 사용하세요.
+- 새 지도 데이터는 선택한 **작품 내부** `book.maps`에 저장되며 기존 지도 `markers`, `paths`, `background`와 이전 버전 원고는 건드리지 않습니다. 브라우저 로컬 자동 저장은 기존 v1.0의 500ms 지연 저장 방식을 그대로 사용합니다.
+- 이미지 원본·지물·지도 데이터는 전체 프로젝트 JSON 백업을 통해 보관합니다.
 
-## 4. Vercel에 배포
-1. https://vercel.com/new 로 이동해 GitHub 연결.
-2. 위의 `fantasy-writer-studio` 저장소를 선택하고 `Import`.
-3. Framework Preset이 `Vite`인지 확인.
-4. Build Command는 `npm run build`, Output Directory는 `dist`로 설정(자동 인식되면 그대로 둠).
-5. `Deploy` 클릭. 빌드 성공 시 `https://...vercel.app` 주소가 생깁니다.
-6. 갤럭시 Chrome에서 해당 주소를 열고 테스트합니다. Chrome 메뉴의 `홈 화면에 추가`로 앱처럼 바로가기를 만들 수 있습니다.
-7. GitHub에 코드를 업데이트하면 Vercel이 자동 재배포합니다.
+## 테스트 체크리스트
+1. 새 지도 만들기 → 산/숲/성/마을 드래그 배치.
+2. 지형 브러시 칠하기 → 강과 도로 그리기.
+3. 아이콘 이동/크기/회전 → 실행 취소/다시 실행.
+4. 지도 여러 장 → 작품 전환 후 각각 분리 확인.
+5. F5 새로고침 후 지도 상태 유지 확인.
+6. PNG/SVG 출력 정상 확인.
+7. 모든 작품 JSON 백업과 테스트 브라우저에서 복원 확인.
+8. 기존 v1.0 지도에서 배경·장소 마커·선이 남아 있는지 확인.
 
-## 5. 테스트 체크리스트
-- [ ] 불가리아어로 제목과 챕터 내용을 작성한다.
-- [ ] 새로고침 후 원고가 남아 있다.
-- [ ] 챕터 2개를 만들어 챕터 이동을 한다.
-- [ ] 캐릭터를 만들고 사진을 2장 첨부, 대표 이미지를 바꾼다.
-- [ ] 장소를 만들고 이미지, 메모를 기록한다.
-- [ ] Word를 내보내 Microsoft Word에서 불가리아어가 표시되는지 확인한다.
-- [ ] PDF를 다운로드해 키릴 문자가 깨지지 않는지 확인한다.
-- [ ] `Архив`에서 JSON 백업을 저장한다.
-- [ ] 갤럭시에서 JSON 파일을 복원해 사진과 챕터가 보이는지 확인한다.
+## GitHub 업로드 (테스트 브랜치만)
+기존 작업 폴더에서 `git switch -c feature/map-studio-2`로 새 브랜치를 만든 뒤, 이 ZIP의 `src`, `public`, `tests` 및 최상위 파일을 복사하세요. 기존 `.git` 폴더는 삭제/덮어쓰기 금지. `.gitignore`가 `node_modules/`, `dist/`, `.env`를 제외하는지 확인하세요. 복사 후:
 
-## 꼭 알아둘 점
-- **PC와 갤럭시의 저장 내용은 자동으로 동기화되지 않습니다.** JSON 백업 파일로 수동 복원해야 합니다.
-- 데이터를 브라우저에 로컬 저장합니다. 사이트 데이터 삭제·시크릿 모드·저장 공간 부족에 주의하세요.
-- 코드 파일만 GitHub에 올립니다. 원고나 개인 이미지를 GitHub 저장소에 넣을 필요 없습니다.
-- 이 버전은 지도 제작·Word 원고 가져오기·맞춤법 검사·AI 기능을 포함하지 않습니다.
-- PDF 생성은 이미지형 렌더 방식이므로 긴 원고는 Word로 내보낸 뒤 Word의 PDF 저장을 사용하는 방법이 더 안정적입니다.
+```bat
+git status
+npm install
+npm test
+npm run build
+git add .
+git commit -m "Add Fantasy Map Studio 2.0"
+git push -u origin feature/map-studio-2
+```
+
+GitHub에서 Pull Request를 생성하면 Vercel Preview 배포가 만들어질 수 있습니다. Preview 사이트를 충분히 시험한 뒤에만 main으로 병합하세요. Preview URL이 프로덕션과 다르면 기존 데이터는 자동으로 이주하지 않습니다.
+
+## 제약 및 다음 개선
+- 이 버전 지물은 독자 제작한 간단한 벡터 픽토그램이며 Inkarnate 수준의 상세 아트 에셋은 아닙니다.
+- 마우스에서는 팔레트 드래그를 지원하고 갤럭시에서는 지물 선택 후 지도를 터치해 배치합니다.
+- 지형은 원형 브러시 누적 기반이며 해안선을 매끄러운 폐곡선으로 자동 처리하는 지형 엔진은 아직 아닙니다.
+- 지도 편집 기록 Undo/Redo는 현재 세션에서만 유지됩니다. 저장된 지도 자체는 로컬 저장/JSON 백업에 포함됩니다.
+- OneDrive 자동 동기화, 실시간 협업, 외부 AI 생성 API 연결은 이번 업데이트의 범위 밖입니다.
+- PNG 출력은 브라우저의 SVG→Canvas 렌더링을 사용합니다. 사용자 업로드 이미지를 포함한 PNG는 브라우저마다 확인하세요.
+
+### 검증 정보
+`npm test` 결과 10개 테스트 통과, TypeScript transpile JSX 문법 진단 오류 0건. 이 제작 환경에서는 의존성 다운로드가 시간 초과되어 `npm run build`와 실제 브라우저 동작은 아직 검증하지 못했습니다. 운영 사이트를 교체하지 말고 Windows PC에서 빌드 및 데이터 복원까지 확인하세요.
